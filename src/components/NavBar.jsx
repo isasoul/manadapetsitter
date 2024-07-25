@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+import { Link } from 'react-scroll';
 import { motion, AnimatePresence } from 'framer-motion';
+import { navLinks } from "../constants";
 import logo from '../assets/Logo-4.png';
 import menu from '../assets/menu.svg';
 import close from '../assets/close.svg';
@@ -12,11 +14,22 @@ const NavBar = () => {
   const [showPopupGatito, setShowPopupGatito] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [showNavBar, setShowNavBar] = useState(true);
-  const location = useLocation();
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    setToggle(false);
-  }, [location]);
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      if (scrollTop > 100) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const controlNavbar = () => {
     if (window.scrollY > lastScrollY) {
@@ -54,37 +67,60 @@ const NavBar = () => {
 
   return (
     <>
-      <motion.nav 
-        className="navbar"
+      <motion.nav
+        className={`navbar ${scrolled ? 'scrolled' : ''}`}
         initial={{ y: 0 }}
         animate={{ y: showNavBar ? 0 : -100 }}
+       //whileHover={{ scale: 1.05 }}
         transition={{ duration: 0.3 }}
       >
-        <motion.img 
-          src={logo} 
-          alt="Logo" 
-          className='logo'
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-        />
+        <Link
+          to="home"
+          spy={true}
+          smooth={true}
+          offset={-70}
+          duration={500}
+          onClick={() => {
+            setActive('home');
+            setToggle(false); // Close the menu when clicking the logo
+          }}
+          className='flex items-center gap-2 cursor-pointer'
+        >
+          <motion.img
+            src={logo}
+            alt="Logo"
+            className='logo'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            whileHover={{ scale: 1.1 }}
+            transition={{ delay: 0.5 }}
+          />
+        </Link>
+
         <div className="navbar-links">
-          {['/', '/about', '/services', '/clients', '/faq', '/contact'].map((path) => (
-            <motion.div 
-              key={path}
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.3 }}
-            >
-              <RouterLink 
-                to={path}
-                className={`font-poppins font-bold cursor-pointer ${active === path ? 'text-blue-500' : 'text-gray-700'}`}
-                onClick={() => handleSetActive(path)}
+          <ul className='list-none hidden sm:flex flex-row gap-10'>
+            {navLinks.map((link) => (
+              <li
+                key={link.id}
+                className={`${active === link.title ? "text-white" : "text-secondary"
+                  } hover:text-white  hover:scale-125 text-[20px] font-medium cursor-pointer`}
+                onClick={() => setActive(link.title)}
               >
-                {path === '/' ? 'Home' : path.substring(1).charAt(0).toUpperCase() + path.substring(1).slice(1)}
-              </RouterLink>
-            </motion.div>
-          ))}
+                <Link
+                  to={link.id}
+                  spy={true}
+                  smooth={true}
+                  offset={-70}
+                  duration={500}
+                  onSetActive={() => handleSetActive(link.title)}
+                >
+                  {link.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
+
         <img
           src={toggle ? close : menu}
           alt="menu"
@@ -94,7 +130,7 @@ const NavBar = () => {
       </motion.nav>
       <AnimatePresence>
         {toggle && (
-          <motion.div 
+          <motion.div
             className='menu-mobile'
             initial={{ opacity: 0, x: '100%' }}
             animate={{ opacity: 1, x: 0 }}
@@ -107,38 +143,44 @@ const NavBar = () => {
               className='close-icon'
               onClick={() => setToggle(false)}
             />
-            {['/', '/about', '/services', '/clients', '/faq', '/contact'].map((path) => (
-              <motion.div 
-                key={path}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <RouterLink 
-                  to={path}
-                  className='text-white font-poppins font-bold text-3xl mb-5 cursor-pointer'
-                  onClick={() => handleSetActive(path)}
+            <ul className='list-none flex justify-end items-start flex-col gap-4'>
+              {navLinks.map((link) => (
+                <li
+                  key={link.id}
+                  className={`font-poppins font-medium cursor-pointer text-[16px] ${active === link.title ? "text-white" : "text-secondary"
+                    }`}
                 >
-                  {path === '/' ? 'Home' : path.substring(1).charAt(0).toUpperCase() + path.substring(1).slice(1)}
-                </RouterLink>
-              </motion.div>
-            ))}
+                  <Link
+                    to={link.id}
+                    spy={true}
+                    smooth={true}
+                    offset={-70}
+                    duration={500}
+                    onClick={() => setToggle(false)}
+                    onSetActive={() => handleSetActive(link.title)}
+                  >
+                    {link.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <motion.div 
-        className='fixed top-0 left-0 w-full flex flex-col items-end p-5 bg-navbar-bg bg-cover bg-center shadow-md'
+      <motion.div
+        className='relative top-0 left-0 w-full flex flex-col items-end p-5 bg-navbar-bg bg-cover bg-center shadow-md'
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ type: 'spring', stiffness: 50 }}
       >
-        <div 
+        <div
           className="perrito-area"
           onMouseEnter={handleMouseEnterPerrito}
         ></div>
         <AnimatePresence>
           {showPopupPerrito && (
-            <motion.div 
+            <motion.div
               className='popup popup-perrito show'
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -150,13 +192,13 @@ const NavBar = () => {
           )}
         </AnimatePresence>
 
-        <div 
+        <div
           className="gatito-area"
           onMouseEnter={handleMouseEnterGatito}
         ></div>
         <AnimatePresence>
           {showPopupGatito && (
-            <motion.div 
+            <motion.div
               className='popup popup-gatito show'
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -168,23 +210,6 @@ const NavBar = () => {
           )}
         </AnimatePresence>
       </motion.div>
-      <div className='absolute bottom-10 left-1/2 transform -translate-x-1/2 w-full flex justify-center items-center'>
-        <RouterLink to="/about">
-          <div className='w-[35px] h-[35px] rounded-3xl border-4 border-blue flex justify-center items-start p-2'>
-            <motion.div
-              animate={{
-                y: [0, 10, 0],
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                repeatType: "loop",
-              }}
-              className='w-3 h-3 rounded-full bg-blue mb-1'
-            />
-          </div>
-        </RouterLink>
-      </div>
     </>
   );
 }
