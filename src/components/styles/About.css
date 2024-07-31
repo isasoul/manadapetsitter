@@ -1,10 +1,15 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+
 .about-container {
   width: 100%;
   min-height: 100vh;
   background-size: cover;
-  background-position: right;
+  background-position: center;
   background-repeat: no-repeat;
-  position: absolute;
+  position: relative;
+  background-color: white;
+
 }
 
 .about-content {
@@ -12,88 +17,41 @@
   text-align: center;
   padding: 20px;
   position: relative;
-  transform: translateY(-5%);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: end;
   gap: 15px;
+
+  
 }
 
-.about-logo {
-  width: 450px;
+.about-img {
+  width: 250px;
   height: auto;
-  right: 30%;
-  position: relative;
-  margin-top: 35px;
-}
-
-.about-card {
-  background-color: #0dc572; /* Light green background */
-  border-radius: 50%;
-  padding: 10px;
-  text-align: center;
-  width: 300px;
-  height: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  right: 10%;
-}
-
-.pink-card {
-  background-color: #d82688; /* Light pink background */
-  position: relative;
-  right: 30%;
-  bottom: 40px;
-}
-
-.about-card p {
-  margin: 0;
-  color: white; /* Change text color inside the card */
-  font-family: 'Poppins', sans-serif;
-  font-size: 1rem;
+  margin: 10px;
+  position: absolute;
+  left: 10%;
+  border-radius: 30px;
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+  border: 3px solid rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 767px) {
-  .about-container {
-    background-image: url('../../assets/aboutmobile.jpg');
-  }
 
+  .about-container{
+    left: 0%;
+  }
   .about-content {
-    transform: translateY(0);
-    gap: 10px;
+    margin: 10px;
+    left: 20%;
+    top: 20%
+
   }
 
-  .about-logo {
-    width: 150px; /* Make the logo smaller on mobile */
-    margin-top: 20px;
-    right: 0; /* Center the logo on mobile */
-  }
-
-  .about-card {
-    width: 190px; /* Make the cards smaller on mobile */
-    height: 190px;
-    right:10% ; /* Center the cards on mobile */
-  }
-.pink-card{
-  width: 170px; /* Make the cards smaller on mobile */
-  height: 170px;
-  right: -20% ; /* Center the cards on mobile */
-}
-
-  .about-card p, .pink-card p {
-    font-size: 0.7rem; /* Smaller font size for mobile */
-  }
-}
-
-@media (min-width: 768px) {
-  .about-container {
-    background-image: url('../../assets/aboutdesktop.jpg');
-  }
-
-  .about-card p, .pink-card p {
-    font-size: 1rem; /* Ensuring font size for desktop */
+  .about-img {
+    width: 150px;
+    margin: 10px auto;
+    top: 0;
   }
 }

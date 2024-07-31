@@ -7,6 +7,7 @@ import logo from '../assets/Logo-4.png';
 import menu from '../assets/menu.svg';
 import close from '../assets/close.svg';
 
+
 const NavBar = () => {
   const [toggle, setToggle] = useState(false);
   const [active, setActive] = useState("");
@@ -71,7 +72,6 @@ const NavBar = () => {
         className={`navbar ${scrolled ? 'scrolled' : ''}`}
         initial={{ y: 0 }}
         animate={{ y: showNavBar ? 0 : -100 }}
-       //whileHover={{ scale: 1.05 }}
         transition={{ duration: 0.3 }}
       >
         <Link
@@ -103,7 +103,7 @@ const NavBar = () => {
               <li
                 key={link.id}
                 className={`${active === link.title ? "text-white" : "text-secondary"
-                  } hover:text-white  hover:scale-125 text-[20px] font-medium cursor-pointer`}
+                  } hover:text-white hover:scale-125 text-[20px] font-medium cursor-pointer`}
                 onClick={() => setActive(link.title)}
               >
                 <Link
@@ -174,6 +174,16 @@ const NavBar = () => {
         animate={{ y: 0 }}
         transition={{ type: 'spring', stiffness: 50 }}
       >
+        <motion.div
+          className="welcome-card"
+          initial={{ x: -300, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 1.5, type: 'spring' }}
+        >
+          <p>Welcome to Manada!</p>
+          <p>
+At PetSitter, we understand that your pets are part of your family. That’s why we offer the highest quality care and attention to ensure your furry friends are happy, healthy, and well taken care of while you're away. Trust us to provide a safe and loving environment for your pets, making us the best choice in town.</p>
+        </motion.div>
         <div
           className="perrito-area"
           onMouseEnter={handleMouseEnterPerrito}

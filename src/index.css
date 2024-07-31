@@ -1,11 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* html {
-  scroll-behavior: smooth;
+/* Ensure no horizontal scrolling */
+html, body {
+  overflow-x: hidden;
 }
- */
 
 /* Estilos personalizados */
 .bg-navbar-bg {
@@ -13,7 +14,6 @@
   background-position: center;
   background-repeat: no-repeat;
   height: 100vh;
-/*   background-attachment: fixed; */
 }
 
 .popup {
@@ -22,10 +22,13 @@
   padding: 10px 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  font-family: 'Poppins', sans-serif;
+  font-family: "Luckiest Guy", cursive;
+  font-weight: 400;
+  font-style: normal;
   display: none;
   font-size: 1.3rem;
-  width: auto;
+  width: 400px;
+  text-align: center;
 }
 
 .popup.show {
@@ -50,17 +53,16 @@
 
 .popup-perrito {
   top: 60%;
-  left: 15%;
+  left: 35%;
   transform: translate(-50%, -50%);
 }
 
 .popup-gatito {
   top: 70%;
-  left: 75%;
+  left: 70%;
   transform: translate(-50%, -50%);
 }
 
-/* Estilos para el menú */
 .navbar {
   background-color: #EFB643;
   width: 100%;
@@ -74,9 +76,6 @@
   left: 0;
   z-index: 1000;
   transition: transform 0.3s ease-in-out;
-  margin-top: 20px;
-  position: fixed;
-
 }
 
 .navbar-links {
@@ -119,7 +118,7 @@
   height: 100%;
   z-index: 1000;
   padding-top: 70px;
-  color: white; 
+  color: white;
 }
 
 .close-icon {
@@ -131,57 +130,125 @@
   cursor: pointer;
 }
 
-/* Media Queries */
+.welcome-card {
+  background: linear-gradient(90deg, rgba(214,67,239,0.7567401960784313) 0%, rgba(32,222,220,1) 100%);
+  padding: 20px 30px;
+  border-radius: 50px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  font-family: "Luckiest Guy", cursive;
+  font-weight: 400;
+  font-style: normal;
+  text-align: justify;
+  position: relative;
+  right: 60%;
+  top: 20%;
+  /* z-index: 1000; */
+  max-width: 200px;
+  height: 250px;
+  color: black;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.welcome-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+}
+
+.welcome-card p {
+  margin: 0;
+  padding: 10px 0;
+  font-size: 1rem;
+}
+
+.welcome-card p:first-of-type {
+  font-size: 1rem;
+} 
+
 @media (max-width: 767px) {
   .bg-navbar-bg {
-    background-image: url('/src/assets/herobannermobile.jpg'); /* Ruta a tu imagen de fondo móvil */
+    background-image: url('/src/assets/herobannermobile.jpg');
     background-size: cover;
     background-position: center;
-    height: auto; /* Permite que la altura sea automática */
-    min-height: 100vh; /* Asegura que tenga una altura mínima de 100vh */
+    height: auto;
+    min-height: 100vh;
   }
 
   .logo {
     height: 50px;
     width: auto;
   }
+
   .popup {
     font-size: 0.9rem;
+    width: 200px;
   }
 
   .popup-perrito {
-    top: 10%; /* Ajusta esta posición según sea necesario */
-    right: 35%;
+    top: 30%;
+    right: 50%;
   }
 
   .popup-gatito {
-    top: 50%; /* Ajusta esta posición según sea necesario */
+    top: 50%;
     left: 35%;
   }
 
   .perrito-area {
     top: 50%;
-    left: 30%; /* Ajusta esta posición según sea necesario */
+    left: 30%;
   }
 
   .gatito-area {
     top: 70%;
-    left: 60%;  /* Ajusta esta posición según sea necesario */
+    left: 60%;
+  }
+
+  .welcome-card {
+    max-width: 80%;
+    left: 1%;
+    height: 200px;
+    padding: 15px 20px;
+  }
+
+  .welcome-card p {
+    font-size: 0.6rem;
+  }
+
+  .welcome-card p:first-of-type {
+    font-size: 1rem;
+    color: black;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1030px) {
   .bg-navbar-bg {
-    background-image: url('/src/assets/herobannermobile.jpg'); /* Ruta a tu imagen de fondo móvil */
+    background-image: url('/src/assets/herobannermobile.jpg');
     background-size: cover;
     background-position: center;
-    height: auto; /* Permite que la altura sea automática */
-    min-height: 100vh; /* Asegura que tenga una altura mínima de 100vh */
+    height: auto;
+    min-height: 100vh;
   }
 
   .logo {
     height: 40px;
     width: 100px;
+  }
+
+  .welcome-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+  }
+  
+  .welcome-card p {
+    margin: 0;
+    padding: 10px 0;
+    font-size: 0.5rem;
+  }
+  
+  .welcome-card p:first-of-type {
+    
+    font-size: 1.4rem;
   }
 }
 
@@ -195,5 +262,19 @@
   .logo {
     height: 60px;
     width: auto;
+  }
+
+  .welcome-card {
+    max-width:500px;
+    height: 300px;
+    padding: 20px 30px;
+  }
+
+  .welcome-card p {
+    font-size: 1rem;
+  }
+
+  .welcome-card p:first-of-type {
+    font-size: 1.2rem;
   }
 }

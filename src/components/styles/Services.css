@@ -1,0 +1,35 @@
+.services-section {
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .menu-item {
+    position: relative;
+    margin: 10px 0;
+  }
+  
+  .image-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  }
+  
+  .image {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 50px;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.3s ease;
+    z-index: -1;
+  }
+  
